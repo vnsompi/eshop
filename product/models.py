@@ -1,0 +1,29 @@
+"""this is the models file of products"""
+from django.db import models
+from django.contrib.auth.models import User
+
+
+class Category(models.TextChoices):
+    ELECTRONICS = 'Electronics'
+    LAPTOP = 'Laptop'
+    ARTS = 'Arts'
+    FOOD = 'Food'
+    HOME = 'Home'
+    KITCHEN = 'Kitchen'
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=100, default="", blank=False)
+    description = models.TextField(max_length=1000,default="", blank=False)
+    price = models.DecimalField(max_digits=7,decimal_places=2, default=0)
+    brand = models.CharField(max_length=100, default="", blank=False)
+    category = models.CharField(max_length=30, choices=Category.choices)
+    ratings = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    stock = models.IntegerField(default=0)
+    """this mean that if we delete a user ,the product will not be deleted """
+    """the user value is going to be deleted  and set to null"""
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    createdAt = models.DateTimeField(auto_now_add=True)
+
+
+
