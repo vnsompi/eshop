@@ -1,6 +1,6 @@
 """this is when we are going to put all logic of product models"""
 
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from .models import Product
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -16,3 +16,9 @@ def get_products(request):
 
     return Response({'products': serializer.data})
 
+""" Single product """
+@api_view(['GET'])
+def get_product(request, pk):
+    product = get_object_or_404(Product, id=pk)
+    serializer = ProductSerializer(product, many=False)
+    return Response({'product': serializer.data})
