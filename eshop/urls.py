@@ -21,3 +21,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('product.urls')),
 ]
+###########################################
+#conf utils dir for error 404, 500 will send  message
+handler404 = 'eshop.utils.error_views.handler404'
+handler500 = 'eshop.utils.error_views.handler500'
+#############################################
