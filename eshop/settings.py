@@ -28,8 +28,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = os.environ.get('DEBUG') == 'True'
-DEBUG = False
+DEBUG = os.environ.get('DEBUG') == 'True'
+#DEBUG = False
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
@@ -92,6 +92,12 @@ DATABASES = {
     }
 }
 
+###################################################################
+###################utils.exception_handler conf######################
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'eshop.utils.custom_exception_handler.custom_exception_handler',
+}
+###################################################################
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
