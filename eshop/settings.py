@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'storages',   #for django-storages
     'rest_framework',
     'django_filters',
     'product.apps.ProductConfig',
@@ -134,3 +135,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+##############################"
+#### AWS configuration #######
+AWS_SECRET_ACCESS_KEY=os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID=os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_STORAGE_BUCKET_NAME=os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_SIGNATURE_VERSION='s3v4'
+AWS_S3_REGION_NAME=os.environ.get('AWS_S3_REGION_NAME')
+AWS_S3_FILE_OVERWRITE=False
+AWS_DEFAULT_ACL=None
+AWS_S3_VERIFY=True
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
