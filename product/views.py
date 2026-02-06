@@ -44,6 +44,18 @@ def get_product(request, pk):
     serializer = ProductSerializer(product, many=False)
     return Response({'product': serializer.data})
 
+####################################
+########Added a new Product#########
+@api_view(['POST'])
+def get_new_product(request):
+
+    data = request.data
+    product = Product.objects.create(**data)
+    serializer = ProductSerializer(product, many=False)
+    return Response({'product': serializer.data})
+#####################################################
+#####################################################
+
 @api_view(['POST'])
 def upload_product_images(request):
     data = request.data
