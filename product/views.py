@@ -1,6 +1,7 @@
 """this is when we are going to put all logic of product models"""
 
 from django.shortcuts import get_object_or_404
+from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 
 from .models import Product, ProductImage
@@ -36,13 +37,14 @@ def get_products(request):
         "resPerPage":resPerPage,
         'products': serializer.data
     })
-
-""" Single product """
+################################
+######### Single product##############
 @api_view(['GET'])
 def get_product(request, pk):
     product = get_object_or_404(Product, id=pk)
     serializer = ProductSerializer(product, many=False)
     return Response({'product': serializer.data})
+###################################"
 
 ####################################
 ########Added a new Product#########
@@ -50,17 +52,23 @@ def get_product(request, pk):
 def get_new_product(request):
 
     data = request.data
-    product = Product.objects.create(**data)
-    serializer = ProductSerializer(product, many=False)
-    return Response({'product': serializer.data})
+    serializer = ProductSerializer(data=data)
+    if serializer.is_valid():
+        product = Product.objects.create(**data)
+        res = ProductSerializer(product, many=False)
+        return Response({'product': res.data})
+    else:
+        return Response(serializer.errors)
+
 #####################################################
 #####################################################
 
+#################################################
+#########" Upload ProductImages into AWS ###############
 @api_view(['POST'])
 def upload_product_images(request):
     data = request.data
     files = request.FILES.getlist('images')
-
 ### Associates uploaded images with a product.
 ##this code upload all images linked to each product in the database
     images = []
@@ -70,3 +78,4 @@ def upload_product_images(request):
     serializer = ProductImageSerializer(images, many=True)
 
     return  Response(serializer.data)
+####################################################
