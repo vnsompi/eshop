@@ -79,3 +79,21 @@ def upload_product_images(request):
 
     return  Response(serializer.data)
 ####################################################
+########## Update a product ####################
+@api_view(['PUT'])
+def update_product(request, pk):
+    product = get_object_or_404(Product, id=pk)
+
+    #-check if the user is same -todo
+    product.name = request.data['name']
+    product.description = request.data['description']
+    product.price = request.data['price']
+    product.category = request.data['category']
+    product.brand = request.data['brand']
+    product.ratings = request.data['ratings']
+    product.stock = request.data['stock']
+
+    product.save()
+
+    serializer = ProductSerializer(product, many=False)
+    return Response({'product': serializer.data})

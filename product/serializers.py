@@ -16,7 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)
     class Meta:
         model = Product
-        fields = ('id', 'name', 'description', 'price','brand','category','stock', 'images','user','images')
+        fields = ('id', 'name', 'description', 'price','brand','ratings','category','stock', 'images','user','images')
         ##############" Validations ##############"
         extra_kwargs = {
             "name": {"required": True, 'allow_blank': False},
